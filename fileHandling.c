@@ -4,10 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-
-
+Records records[max_records];;
+ int entryCount=0;
 int readData(char * filename)
     {
 

@@ -17,10 +17,11 @@ typedef struct
     int year ;
 }Records;
 
-Records records[max_records];
-int entryCount=0;
 
 void cleanField(char *str);
 int readData(char * location );
 void printData();
+
+extern Records records[max_records];;
+extern  int entryCount;
 #endif //FILEHANDLING_H

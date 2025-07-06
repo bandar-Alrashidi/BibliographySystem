@@ -1,13 +1,13 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "MenuOperation.h"
 #include "fileHandling.h"
-int entryCount;//store entries count
 int main(void)
 {
     printf("This is my Bibliography project!\n");
     //read date from file
-    entryCount=readData("data.txt");
-   // printData();
+    readData("data.txt");
     createMenu();
     return 0;
 }
@@ -15,7 +15,7 @@ int main(void)
 
 void createMenu()
 {
-    int userEntry;
+    int choice;
     printf("1- Search by Author \n");
     printf("2- Search by Title \n");
     printf("3- Search by year \n");
@@ -28,22 +28,26 @@ void createMenu()
     printf("10- Add new Entry\n");
     printf("---------------------------------\n");
     printf("Enter from above list please\n");
-    scanf("%d" , &userEntry);
+    scanf("%d" , &choice);
 
-    menuHandling(userEntry);
+    menuHandling(choice);
 }
 
 void menuHandling(int userChoice)
 {
-    if (userChoice==1)
+    if (userChoice==1) // search by author name
     {
         char authorName[100];
-       printf("Enter Author name  : \n");
-
+        printf("Enter Author name  : \n");
+        scanf("%s", authorName);
+        searchByAuthor(authorName);
     }
     else if (userChoice==2)
     {
-
+        char title[100];
+        printf( "Enter Title : \n");
+        scanf("%s", title);
+        searchByTitle(title);
     }
     else if (userChoice==3)
     {
@@ -77,6 +81,35 @@ void menuHandling(int userChoice)
     else
     {
         printf("Wrong choice please choose from 1 to 10\n");
+    }
+}
+
+void searchByAuthor(char *authorName )
+{
+    for ( int i = 0 ; i<entryCount ; i++)
+    {
+        if ( strstr (records[i].authors , authorName))
+        {
+            printf("Author %s found in record %d\n", authorName, i+1);
+            printf("Title is : %s \n",records->titles);
+            printf("Type is : %s \n",records->types);
+            printf("Year is : %d \n",records->year);
+        }
+    }
+}
+
+void searchByTitle(char *titleName )
+{
+    for ( int i = 0 ; i<entryCount ; i++)
+    {
+        if ( strstr (records[i].titles , titleName))
+        {
+            printf("Title %s found in record %d\n", titleName, i+1);
+            printf("Author is : %s \n",records->authors);
+            printf("Title is : %s \n",records->titles);
+            printf("Type is : %s \n",records->types);
+            printf("Year is : %d \n",records->year);
+        }
     }
 }
 

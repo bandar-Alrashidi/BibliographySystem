@@ -10,5 +10,6 @@
 void createMenu();
 void menuHandling(int userChoice);
 
-void searchByAuthor(char *authorName , int entryCount);
+void searchByAuthor(char *authorName );
+void searchByTitle(char *titleName );
 #endif //MENUOPERATION_H
