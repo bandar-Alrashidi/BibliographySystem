@@ -8,6 +8,7 @@
 #define max_records 100
 #define max_fields 250
 
+
 typedef struct
 {
     char titles [max_fields];
@@ -15,6 +16,9 @@ typedef struct
     char authors  [max_fields];
     int year ;
 }Records;
+
+Records records[max_records];
+int entryCount=0;
 
 void cleanField(char *str);
 int readData(char * location );

@@ -7,8 +7,7 @@
 
 
 
-Records records[max_records];
-int entryCount=0;
+
 int readData(char * filename)
     {
 

@@ -8,4 +8,7 @@
 
 
 void createMenu();
+void menuHandling(int userChoice);
+
+void searchByAuthor(char *authorName , int entryCount);
 #endif //MENUOPERATION_H
