@@ -12,4 +12,7 @@ void menuHandling(int userChoice);
 
 void searchByAuthor(char *authorName );
 void searchByTitle(char *titleName );
+void searchByYear(int year);
+void searchByRangeYears(int beginning , int ending);
+void checkDuplicates();
 #endif //MENUOPERATION_H

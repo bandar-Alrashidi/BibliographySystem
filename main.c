@@ -8,6 +8,7 @@ int main(void)
     printf("This is my Bibliography project!\n");
     //read date from file
     readData("data.txt");
+    checkDuplicates();
     createMenu();
     return 0;
 }
@@ -51,10 +52,20 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==3)
     {
+        int year;
+        printf( "Enter Year : \n");
+        scanf("%d", &year);
+        searchByYear(year);
 
     }
     else if (userChoice==4)
     {
+        int beginning_year , ending_year;
+        printf("Enter beginning  year \n");
+        scanf("%d", &beginning_year);
+        printf("Enter ending  year \n");
+        scanf("%d", &ending_year);
+       searchByRangeYears(beginning_year, ending_year);
 
     }
     else if (userChoice==5)
@@ -67,7 +78,7 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==7)
     {
-
+        checkDuplicates();
     }
     else if (userChoice==9)
     {
@@ -91,13 +102,12 @@ void searchByAuthor(char *authorName )
         if ( strstr (records[i].authors , authorName))
         {
             printf("Author %s found in record %d\n", authorName, i+1);
-            printf("Title is : %s \n",records->titles);
-            printf("Type is : %s \n",records->types);
-            printf("Year is : %d \n",records->year);
+            printf("Title is : %s \n",records[i].titles);
+            printf("Type is : %s \n",records[i].types);
+            printf("Year is : %d \n",records[i].year);
         }
     }
 }
-
 void searchByTitle(char *titleName )
 {
     for ( int i = 0 ; i<entryCount ; i++)
@@ -105,11 +115,62 @@ void searchByTitle(char *titleName )
         if ( strstr (records[i].titles , titleName))
         {
             printf("Title %s found in record %d\n", titleName, i+1);
-            printf("Author is : %s \n",records->authors);
-            printf("Title is : %s \n",records->titles);
-            printf("Type is : %s \n",records->types);
-            printf("Year is : %d \n",records->year);
+            printf("Author is : %s \n",records[i].authors);
+            printf("Title is : %s \n",records[i].titles);
+            printf("Type is : %s \n",records[i].types);
+            printf("Year is : %d \n",records[i].year);
         }
     }
 }
+void searchByYear( int year)
+{
+    for (int i = 0 ; i<entryCount ; i++)
+    {
+        if (records[i].year == year )
+        {
+            printf("Year %d found in record %d\n", year, i+1);
+            printf("Author is : %s \n",records[i].authors);
+            printf("Title is : %s \n",records[i].titles);
+            printf("Type is : %s \n",records[i].types);
+            printf("Year is : %d \n",records[i].year);
+            printf("---------------------------------------------\n");
+        }
+    }
 
+}
+void searchByRangeYears(int beginning , int ending)
+{
+
+    for (int i = 0 ; i<entryCount ; i++)
+    {
+        if (records[i].year >= beginning && records[i].year <= ending )
+        {
+            printf("Range Years %d - %d found in record %d\n", beginning ,ending, i+1);
+            printf("Author is : %s \n",records[i].authors);
+            printf("Title is : %s \n",records[i].titles);
+            printf("Type is : %s \n",records[i].types);
+            printf("Year is : %d \n",records[i].year);
+            printf("---------------------------------------------\n");
+        }
+    }
+}
+void checkDuplicates()
+{
+    int duplicateFound=0;
+    for (int outer = 0 ; outer < entryCount-1 ;outer++)
+    {
+        for ( int inner=outer+1 ; inner<entryCount ;inner++ )
+        {
+            if (strcmp(records[inner].authors , records[outer].authors)==0 &&
+                strcmp(records[inner].titles , records[outer].titles)==0 )
+            {
+                printf("Duplicate has been found for title %s \n" ,records[inner].titles );
+                duplicateFound=1;
+            }
+        }
+    }
+    if (duplicateFound==0 )
+    {
+        printf("No duplicates found \n");
+    }
+}

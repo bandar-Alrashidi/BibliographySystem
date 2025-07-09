@@ -5,7 +5,7 @@
 #ifndef FILEHANDLING_H
 #define FILEHANDLING_H
 
-#define max_records 100
+#define max_records 50
 #define max_fields 250
 
 
