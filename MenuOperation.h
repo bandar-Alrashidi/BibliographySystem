@@ -15,4 +15,6 @@ void searchByTitle(char *titleName );
 void searchByYear(int year);
 void searchByRangeYears(int beginning , int ending);
 void checkDuplicates();
+void displayEntryTypesAndCount();
+void showMissingEntries();
 #endif //MENUOPERATION_H

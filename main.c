@@ -71,6 +71,8 @@ void menuHandling(int userChoice)
     else if (userChoice==5)
     {
 
+     displayEntryTypesAndCount();
+
     }
     else if (userChoice==6)
     {
@@ -82,7 +84,7 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==9)
     {
-
+        showMissingEntries();
     }
     else if (userChoice==10)
     {
@@ -172,5 +174,63 @@ void checkDuplicates()
     if (duplicateFound==0 )
     {
         printf("No duplicates found \n");
+    }
+}
+
+void displayEntryTypesAndCount()
+{
+    char entryType[max_records][max_fields];
+
+    int entryTypes_count[max_records]={0};
+
+    for (int i = 0 ; i<entryCount ; i++)
+    {
+        int found = 0;
+        for (int j=0 ; j <entryCount ; j++)
+        {
+            if ( strcmp(records[i].types , entryType[j]) ==0 )
+            {
+                found=1;
+                entryTypes_count[j]++;
+                break;
+            }
+        }
+        if (found==0)
+        {
+            strcpy(entryType[i],records[i].types);
+            entryTypes_count[i]++;
+        }
+    }
+    for (int i=0 ; i<entryCount ; i++)
+    {
+        if (entryTypes_count[i]!=0)
+             printf(" %s : %d \n",entryType[i] , entryTypes_count[i]);
+    }
+
+}
+
+void showMissingEntries()
+{
+
+    for (int i=0 ; i<entryCount ; i++)
+    {
+        int missingFound=0;
+        if (strcmp(records[i].authors ,"")==0)
+        {
+               missingFound=1;
+        }
+        if (strcmp(records[i].titles ,"")==0)
+        {
+              missingFound=1;
+        }
+        if (records[i].year ==0)
+        {
+            missingFound=1;
+        }
+        if (missingFound==1)
+        {
+           printf("Missing found at index  %d \n",i);
+
+        }
     }
 }
