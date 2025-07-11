@@ -36,23 +36,29 @@ void createMenu()
 
 void menuHandling(int userChoice)
 {
+    char authorName[100];
+    char title[100];
+    char type[100];
+    char citekey[100];
+    int year;
+    int beginning_year , ending_year;
     if (userChoice==1) // search by author name
     {
-        char authorName[100];
+
         printf("Enter Author name  : \n");
         scanf("%s", authorName);
         searchByAuthor(authorName);
     }
     else if (userChoice==2)
     {
-        char title[100];
+
         printf( "Enter Title : \n");
         scanf("%s", title);
         searchByTitle(title);
     }
     else if (userChoice==3)
     {
-        int year;
+
         printf( "Enter Year : \n");
         scanf("%d", &year);
         searchByYear(year);
@@ -60,7 +66,7 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==4)
     {
-        int beginning_year , ending_year;
+
         printf("Enter beginning  year \n");
         scanf("%d", &beginning_year);
         printf("Enter ending  year \n");
@@ -76,11 +82,15 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==6)
     {
-
+        DisplayAuthorsAlphabetically();
     }
     else if (userChoice==7)
     {
         checkDuplicates();
+    }
+    else if (userChoice==8)
+    {
+        //ref
     }
     else if (userChoice==9)
     {
@@ -88,7 +98,22 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==10)
     {
+        printf("Enter type of entry : \n");
+        scanf("%s", type);
 
+        printf( "Enter Cite Key (Optional): \n");
+        scanf("%s", citekey);
+
+        printf("Enter Author name  : \n");
+        scanf("%s", authorName);
+
+        printf( "Enter Title : \n");
+        scanf("%s", title);
+
+        printf( "Enter Year : \n");
+        scanf("%d", &year);
+
+        AddNewRecords(type, citekey, authorName, title, year);
     }
 
     else
@@ -232,5 +257,48 @@ void showMissingEntries()
            printf("Missing found at index  %d \n",i);
 
         }
+    }
+}
+
+void AddNewRecords(char *Type , char *citeKey , char *Author , char *Title , int Year )
+{
+    FILE *fp = fopen("data.txt", "a");
+    fprintf(fp, "@%s{%s,\n",Type,citeKey);
+    fprintf(fp, "author= {%s},\n",Author);
+    fprintf(fp, "title= {%s},\n",Title);
+    fprintf(fp, "year= {%d}\n",Year);
+    fprintf(fp, "}\n");
+    fclose(fp);
+}
+void DisplayAuthorsAlphabetically()
+{
+    char tempAuthors[max_records][max_records];
+    int authors_counter=0;
+
+    for ( int i=0 ; i<entryCount ; i++)
+    {
+        strcpy(tempAuthors[i],records[i].authors);
+        printf("%s",tempAuthors[i]);
+        authors_counter++;
+    }
+
+
+    for (int i=0 ; i<authors_counter-1 ; i++)
+    {
+       for ( int j=i+1 ; j <authors_counter ; j++ )
+       {
+           if ( strcmp (tempAuthors[i] , tempAuthors[j]) > 0 )
+           {
+               char temp[max_fields];
+               strcpy(temp,tempAuthors[i]);
+               strcpy(tempAuthors[i],tempAuthors[j]);
+               strcpy(tempAuthors[j],temp);
+           }
+       }
+    }
+
+    for (int i=0 ; i<authors_counter ; i++)
+    {
+        printf("%s\n",tempAuthors[i]);
     }
 }

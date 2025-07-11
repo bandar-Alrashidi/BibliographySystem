@@ -17,4 +17,6 @@ void searchByRangeYears(int beginning , int ending);
 void checkDuplicates();
 void displayEntryTypesAndCount();
 void showMissingEntries();
+void AddNewRecords(char *Type , char *citeKey , char *Author , char *Title , int Year   );
+void DisplayAuthorsAlphabetically();
 #endif //MENUOPERATION_H
