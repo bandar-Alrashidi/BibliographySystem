@@ -50,9 +50,12 @@ int readData(char * filename)
 
 void cleanField(char *str) {
     char *end;
-    while (*str == ' ' || *str == '\t') str++;
+    while (*str == ' ' || *str == '\t' || *str ==  '\n')
+    {
+        str++;
+    }
     end = str + strlen(str) - 1;
-    while (end > str && (*end == ' ' || *end == ',' || *end == '}')) *end-- = '\0';
+    while (end > str && (*end == ' ' || *end == ',' || *end == '}' || *end =='\n')) *end-- = '\0';
     memmove(str, str, strlen(str) + 1);
 }
 void printData()

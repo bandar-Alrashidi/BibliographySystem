@@ -9,7 +9,8 @@ int main(void)
     //read date from file
     readData("data.txt");
     checkDuplicates();
-    createMenu();
+    while (1)
+         createMenu();
     return 0;
 }
 
@@ -17,6 +18,7 @@ int main(void)
 void createMenu()
 {
     int choice;
+    printf("\n\n");
     printf("1- Search by Author \n");
     printf("2- Search by Title \n");
     printf("3- Search by year \n");
@@ -90,7 +92,10 @@ void menuHandling(int userChoice)
     }
     else if (userChoice==8)
     {
-        //ref
+        printf( "Enter Title : \n");
+        scanf("%s", title);
+        int index = searchByTitle(title);
+        GenereteHarvardRef(index);
     }
     else if (userChoice==9)
     {
@@ -135,8 +140,9 @@ void searchByAuthor(char *authorName )
         }
     }
 }
-void searchByTitle(char *titleName )
+int searchByTitle(char *titleName )
 {
+    int index =-1;
     for ( int i = 0 ; i<entryCount ; i++)
     {
         if ( strstr (records[i].titles , titleName))
@@ -146,8 +152,10 @@ void searchByTitle(char *titleName )
             printf("Title is : %s \n",records[i].titles);
             printf("Type is : %s \n",records[i].types);
             printf("Year is : %d \n",records[i].year);
+            index = i;
         }
     }
+    return index;
 }
 void searchByYear( int year)
 {
@@ -272,13 +280,12 @@ void AddNewRecords(char *Type , char *citeKey , char *Author , char *Title , int
 }
 void DisplayAuthorsAlphabetically()
 {
-    char tempAuthors[max_records][max_records];
+    char tempAuthors[max_records][max_fields];
     int authors_counter=0;
 
     for ( int i=0 ; i<entryCount ; i++)
     {
         strcpy(tempAuthors[i],records[i].authors);
-        printf("%s",tempAuthors[i]);
         authors_counter++;
     }
 
@@ -296,9 +303,17 @@ void DisplayAuthorsAlphabetically()
            }
        }
     }
-
+printf("Authors alphabetically\n\n");
     for (int i=0 ; i<authors_counter ; i++)
     {
         printf("%s\n",tempAuthors[i]);
     }
+}
+
+void GenereteHarvardRef(int index)
+{
+    printf("Harvard reference : \n\n");
+    printf("%s. ",records[index].authors);
+    printf("(%d) ",records[index].year);
+    printf("%s",records[index].titles);
 }
